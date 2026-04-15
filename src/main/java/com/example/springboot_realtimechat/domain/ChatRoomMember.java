@@ -1,0 +1,35 @@
+package com.example.springboot_realtimechat.domain;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Getter
+@NoArgsConstructor
+@Table(name="chatroom_members")
+public class ChatRoomMember {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "chatroom_id")
+    private ChatRoom chatRoom;
+
+    public ChatRoomMember(Member member, ChatRoom chatRoom) {
+        connect(member, chatRoom);
+    }
+
+    public void connect(Member member, ChatRoom chatRoom){
+        this.member = member;
+        this.chatRoom = chatRoom;
+
+        member.getChatRoomMembers().add(this);
+        chatRoom.getChatRoomMembers().add(this);
+    }
+}
