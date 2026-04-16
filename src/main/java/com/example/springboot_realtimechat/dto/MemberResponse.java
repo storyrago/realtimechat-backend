@@ -1,5 +1,6 @@
 package com.example.springboot_realtimechat.dto;
 
+import com.example.springboot_realtimechat.domain.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,14 @@ public class MemberResponse {
         this.email = email;
         this.nickname = nickname;
         this.createAt = createAt;
+    }
+
+    public static MemberResponse from(Member member){
+        return new MemberResponse(
+                member.getId(),
+                member.getEmail(),
+                member.getNickname(),
+                member.getCreatedAt()
+        );
     }
 }
