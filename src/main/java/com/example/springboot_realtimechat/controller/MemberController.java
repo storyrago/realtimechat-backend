@@ -14,24 +14,24 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
 public class MemberController {
-    private final MemberService memberSerivce;
+    private final MemberService memberService;
 
     @GetMapping
     public List<MemberResponse> getAllMembers(){
-        List<Member> memberList = memberSerivce.getMemberList();
+        List<Member> memberList = memberService.getMemberList();
         return memberList.stream()
                 .map(MemberResponse::from)
                 .toList();
     }
     @GetMapping("/{id}")
     public MemberResponse getMemberById(@PathVariable Long id){
-        Member member = memberSerivce.getMemberById(id);
+        Member member = memberService.getMemberById(id);
         return MemberResponse.from(member);
     }
 
     @PostMapping
     public MemberResponse create(@RequestBody MemberRequest memberRequest){
-       Member member = memberSerivce.create(
+       Member member = memberService.create(
                memberRequest.getEmail(),
                memberRequest.getPassword(),
                memberRequest.getNickname()
@@ -41,12 +41,13 @@ public class MemberController {
                 member.getId(),
                 member.getEmail(),
                 member.getNickname(),
-                member.getCreatedAt());
+                member.getCreatedAt()
+        );
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id){
-        memberSerivce.delete(id);
+        memberService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
