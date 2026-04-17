@@ -20,6 +20,11 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatRoom);
     }
 
+    public ChatRoom getChatRoomById(Long chatRoomId){
+        return chatRoomRepository.findById(chatRoomId)
+                .orElseThrow(()->new RuntimeException("채팅방 없음."));
+    }
+
     public List<ChatRoom> getAllChatRooms(){
         return chatRoomRepository.findAll();
     }
