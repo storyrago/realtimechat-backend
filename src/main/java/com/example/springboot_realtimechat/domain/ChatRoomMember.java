@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name="chatroom_members")
+@Table(name="chatroom_members",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"member_id", "chatroom_id"})
+    })
 public class ChatRoomMember {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
