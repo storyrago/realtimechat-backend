@@ -4,6 +4,7 @@ import com.example.springboot_realtimechat.domain.Member;
 import com.example.springboot_realtimechat.dto.MemberRequest;
 import com.example.springboot_realtimechat.dto.MemberResponse;
 import com.example.springboot_realtimechat.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public MemberResponse create(@RequestBody MemberRequest memberRequest){
+    public MemberResponse create(@Valid @RequestBody MemberRequest memberRequest){
        Member member = memberService.create(
                memberRequest.getEmail(),
                memberRequest.getPassword(),
