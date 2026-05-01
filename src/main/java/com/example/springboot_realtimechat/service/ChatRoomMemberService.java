@@ -3,6 +3,8 @@ package com.example.springboot_realtimechat.service;
 import com.example.springboot_realtimechat.domain.ChatRoom;
 import com.example.springboot_realtimechat.domain.ChatRoomMember;
 import com.example.springboot_realtimechat.domain.Member;
+import com.example.springboot_realtimechat.global.exception.CustomException;
+import com.example.springboot_realtimechat.global.exception.ErrorCode;
 import com.example.springboot_realtimechat.repository.ChatRoomMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class ChatRoomMemberService {
                 .existsByMemberAndChatRoom(member, chatRoom);
 
         if(exists){
-            throw new RuntimeException("이미 참여한 멤버임.");
+            throw new CustomException(ErrorCode.ALREADY_JOINED_ROOM);
         }
 
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, chatRoom);
@@ -41,7 +43,7 @@ public class ChatRoomMemberService {
         ChatRoom chatRoom = chatRoomService.getChatRoomById(chatRoomId);
         ChatRoomMember chatRoomMember = chatRoomMemberRepository
                 .findByMemberAndChatRoom(member, chatRoom)
-                        .orElseThrow(()->new RuntimeException("참여 정보 없음."));
+                        .orElseThrow(()->new CustomException(ErrorCode.NOT_JOINED_ROOM));
 
         chatRoomMemberRepository.delete(chatRoomMember);
     }

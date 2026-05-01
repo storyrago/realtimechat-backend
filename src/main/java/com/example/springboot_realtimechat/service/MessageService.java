@@ -3,6 +3,8 @@ package com.example.springboot_realtimechat.service;
 import com.example.springboot_realtimechat.domain.ChatRoom;
 import com.example.springboot_realtimechat.domain.Member;
 import com.example.springboot_realtimechat.domain.Message;
+import com.example.springboot_realtimechat.global.exception.CustomException;
+import com.example.springboot_realtimechat.global.exception.ErrorCode;
 import com.example.springboot_realtimechat.repository.ChatRoomMemberRepository;
 import com.example.springboot_realtimechat.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,7 @@ public class MessageService {
 
         boolean exists = chatRoomMemberRepository.existsByMemberAndChatRoom(member, chatRoom);
         if(!exists){
-            throw new RuntimeException("채팅방에 참여하지 않은 유저임.");
+            throw new CustomException(ErrorCode.NOT_JOINED_ROOM);
         }
 
         Message message = new Message(content, member, chatRoom);
@@ -36,7 +38,7 @@ public class MessageService {
 
     public Message getMessageById(Long messageId){
         return messageRepository.findById(messageId)
-                .orElseThrow(() -> new RuntimeException("메시지 없음."));
+                .orElseThrow(() -> new CustomException(ErrorCode.MESSAGE_NOT_FOUND));
     }
 
     public List<Message> getAllChatRoomMessages(Long chatroomId){
