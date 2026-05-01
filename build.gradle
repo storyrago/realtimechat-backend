@@ -31,6 +31,9 @@ dependencies {
 
 	//swagger 문서화
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
+
+	//spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
