@@ -32,8 +32,8 @@ public class MemberService {
         if (memberRepository.findByEmail(email).isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
-
-        Member member = new Member(email, password, nickname);
+        String encodedPassword = passwordEncoder.encode(password);
+        Member member = new Member(email, encodedPassword, nickname);
         return memberRepository.save(member);
     }
 
