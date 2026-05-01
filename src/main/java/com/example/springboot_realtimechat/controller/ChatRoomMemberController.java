@@ -5,6 +5,7 @@ import com.example.springboot_realtimechat.dto.ChatRoomMemberRequest;
 import com.example.springboot_realtimechat.dto.ChatRoomMemberResponse;
 import com.example.springboot_realtimechat.dto.ChatRoomResponse;
 import com.example.springboot_realtimechat.service.ChatRoomMemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ChatRoomMemberController {
     @PostMapping
     public ChatRoomMemberResponse join(
             @PathVariable Long chatroomId,
-            @RequestBody ChatRoomMemberRequest chatRoomMemberRequest
+            @Valid @RequestBody ChatRoomMemberRequest chatRoomMemberRequest
             ){
         ChatRoomMember chatRoomMember = chatRoomMemberService.join(
                 chatRoomMemberRequest.getMemberId(), chatroomId
@@ -46,7 +47,7 @@ public class ChatRoomMemberController {
     @DeleteMapping
     public ResponseEntity<Void> leave(
             @PathVariable Long chatroomId,
-            @RequestBody ChatRoomMemberRequest chatRoomMemberRequest
+            @Valid @RequestBody ChatRoomMemberRequest chatRoomMemberRequest
     ){
         chatRoomMemberService.leave(chatRoomMemberRequest.getMemberId(), chatroomId);
 

@@ -22,6 +22,7 @@ public enum ErrorCode {
 
     // Global
     INVALID_INPUT_VALUE(400, "잘못된 입력값입니다."),
+    DATA_INTEGRITY_VIOLATION(409, "데이터 무결성 제약 조건을 위반했습니다."),
     METHOD_NOT_ALLOWED(405, "허용되지 않은 HTTP 메서드입니다."),
     INTERNAL_SERVER_ERROR(500, "서버 내부 오류가 발생했습니다.");
 
