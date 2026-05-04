@@ -3,7 +3,9 @@ package com.example.springboot_realtimechat.service;
 import com.example.springboot_realtimechat.domain.Member;
 import com.example.springboot_realtimechat.global.exception.CustomException;
 import com.example.springboot_realtimechat.global.exception.ErrorCode;
+import com.example.springboot_realtimechat.repository.ChatRoomMemberRepository;
 import com.example.springboot_realtimechat.repository.MemberRepository;
+import com.example.springboot_realtimechat.repository.MessageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ChatRoomMemberRepository chatRoomMemberRepository;
+    private final MessageRepository messageRepository;
 
     public List<Member> getMemberList(){
         return memberRepository.findAll();
@@ -41,6 +45,9 @@ public class MemberService {
     public void delete(Long id){
         Member member = memberRepository.findById(id)
                 .orElseThrow(()-> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        chatRoomMemberRepository.deleteByMember(member);
+        messageRepository.deleteByMember(member);
         memberRepository.delete(member);
     }
 }

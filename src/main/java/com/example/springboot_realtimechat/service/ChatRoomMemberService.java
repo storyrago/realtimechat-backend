@@ -7,6 +7,7 @@ import com.example.springboot_realtimechat.global.exception.CustomException;
 import com.example.springboot_realtimechat.global.exception.ErrorCode;
 import com.example.springboot_realtimechat.repository.ChatRoomMemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,14 @@ public class ChatRoomMemberService {
         }
 
         ChatRoomMember chatRoomMember = new ChatRoomMember(member, chatRoom);
-        return chatRoomMemberRepository.save(chatRoomMember);
+        try{
+            // 트랜잭션이 끝나는 시점에 실제 SQL이 실행될 수 있어서, 중복 참여로 인한 unique 제약조건 예외가 try-catch 밖에서 발생할 수 있음.
+            // saveAndFlush()는 저장한 뒤 즉시 DB에 반영을 시도.
+            return chatRoomMemberRepository.saveAndFlush(chatRoomMember);
+        } catch (DataIntegrityViolationException e) {
+            throw new CustomException(ErrorCode.ALREADY_JOINED_ROOM);
+        }
+
     }
 
     @Transactional
