@@ -26,7 +26,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/members/**",   // 회원가입, 로그인
+                                "/api/auth/**",      // 로그인
+                                "/api/members/**",   // 회원가입
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
