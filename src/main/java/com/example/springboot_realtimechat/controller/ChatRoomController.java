@@ -19,11 +19,7 @@ public class ChatRoomController {
     @PostMapping
     public ChatRoomResponse create(@Valid @RequestBody ChatRoomRequest chatRoomRequest){
         ChatRoom chatRoom = chatRoomService.create(chatRoomRequest.getName());
-        return new ChatRoomResponse(
-                chatRoom.getId(),
-                chatRoom.getName(),
-                chatRoom.getCreatedAt()
-        );
+        return ChatRoomResponse.from(chatRoom);
     }
 
     @GetMapping("/{id}")

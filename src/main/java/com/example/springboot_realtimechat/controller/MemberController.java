@@ -38,12 +38,7 @@ public class MemberController {
                memberRequest.getNickname()
        );
 
-        return new MemberResponse(
-                member.getId(),
-                member.getEmail(),
-                member.getNickname(),
-                member.getCreatedAt()
-        );
+        return MemberResponse.from(member);
     }
 
     @DeleteMapping("/{id}")

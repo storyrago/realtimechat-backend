@@ -26,11 +26,7 @@ public class ChatRoomMemberController {
         ChatRoomMember chatRoomMember = chatRoomMemberService.join(
                 chatRoomMemberRequest.getMemberId(), chatroomId
         );
-        return new ChatRoomMemberResponse(
-                chatRoomMember.getId(),
-                chatRoomMember.getMember().getId(),
-                chatRoomMember.getChatRoom().getId()
-        );
+        return ChatRoomMemberResponse.from(chatRoomMember);
     }
 
     @GetMapping
