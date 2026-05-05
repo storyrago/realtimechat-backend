@@ -14,3 +14,7 @@ spring:
   h2:
     console:
       enabled: true
+
+jwt:
+  secret: test-secret-key-for-jwt-authentication-1234567890
+  access-token-expiration-ms: 3600000
