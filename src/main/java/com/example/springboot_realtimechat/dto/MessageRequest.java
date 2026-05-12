@@ -10,7 +10,4 @@ import lombok.Setter;
 public class MessageRequest {
     @NotBlank
     String content;
-
-    @NotNull
-    Long memberId;
 }
