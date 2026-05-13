@@ -22,16 +22,14 @@ public class MessageController {
     public MessageResponse sendMessage(
             @PathVariable Long chatroomId,
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestBody MessageRequest messageRequest
-            ){
+            @Valid @RequestBody MessageRequest messageRequest) {
         Message message = messageService.create(
-                messageRequest.getContent(), customUserDetails.getMemberId(), chatroomId
-        );
+                messageRequest.getContent(), customUserDetails.getMemberId(), chatroomId);
         return MessageResponse.from(message);
     }
 
     @GetMapping
-    public List<MessageResponse> getMessages(@PathVariable Long chatroomId){
+    public List<MessageResponse> getMessages(@PathVariable Long chatroomId) {
         List<Message> messageList = messageService.getAllChatRoomMessages(chatroomId);
         return messageList.stream()
                 .map(MessageResponse::from)
