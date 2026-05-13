@@ -24,15 +24,13 @@ public class ChatMessageController {
     public MessageResponse sendMessage(
             @DestinationVariable Long chatroomId,
             MessageRequest messageRequest,
-            Principal principal
-    ){
-        CustomUserDetails customUserDetails = (CustomUserDetails)((Authentication) principal).getPrincipal();
+            Principal principal) {
+        CustomUserDetails customUserDetails = (CustomUserDetails) ((Authentication) principal).getPrincipal();
 
         Message message = messageService.create(
                 messageRequest.getContent(),
                 customUserDetails.getMemberId(),
-                chatroomId
-        );
+                chatroomId);
 
         return MessageResponse.from(message);
     }
